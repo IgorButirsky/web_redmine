@@ -12,12 +12,14 @@
 /home/igor/Cordova_projects/Redmine/platforms/android/bin/res/drawable-ldpi/icon.png \
 /home/igor/Cordova_projects/Redmine/platforms/android/bin/res/drawable-mdpi/icon.png \
 /home/igor/Cordova_projects/Redmine/platforms/android/assets/www \
+/home/igor/Cordova_projects/Redmine/platforms/android/assets/www/demo_ajax_json.js \
 /home/igor/Cordova_projects/Redmine/platforms/android/assets/www/cordova.js \
 /home/igor/Cordova_projects/Redmine/platforms/android/assets/www/js \
 /home/igor/Cordova_projects/Redmine/platforms/android/assets/www/css \
 /home/igor/Cordova_projects/Redmine/platforms/android/assets/www/index.html \
 /home/igor/Cordova_projects/Redmine/platforms/android/assets/www/img \
 /home/igor/Cordova_projects/Redmine/platforms/android/assets/www/cordova_plugins.js \
+/home/igor/Cordova_projects/Redmine/platforms/android/assets/www/index2.html \
 /home/igor/Cordova_projects/Redmine/platforms/android/assets/www/js/index.js \
 /home/igor/Cordova_projects/Redmine/platforms/android/assets/www/css/index.css \
 /home/igor/Cordova_projects/Redmine/platforms/android/assets/www/img/logo.png \

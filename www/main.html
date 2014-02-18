@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <link rel="stylesheet" type="text/css" href="css/index.css" />
+        <title>Hello World</title>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js">
+        </script>
+    </head>
+    <body>
+        <script >
+            $(document).ready(function(){
+                getProjects();
+            });
+            function getProjects()
+            {
+                var http = new XMLHttpRequest();
+                var url = "http://crm.mlsdev.com/projects.json?key=" + localStorage.getItem("api_key");
+
+                http.open("GET", url, true);
+                http.onreadystatechange = function() {
+                    if(http.readyState == 4 && http.status == 200) {
+                        var projects = eval("(" + http.responseText + ")");
+                        for (var i = 0; i < projects.total_count; i++) {
+                            var item = $("<p></p>").text(projects.projects[i].name);
+                            $("#list_container").append(item);
+                        }
+                    }
+                }
+                http.send();
+            }
+        </script>
+        <div id="list_container"></div>
+    </body>
+</html>
