@@ -1,8 +1,7 @@
 .side_menu {
 	background-color:#FFD700;
-	height:500px;
-	width:200px;
-	float:left;	
+	height:100%;
+	width:100%;
 }
 
 .menu_items {
@@ -20,9 +19,8 @@
 
 .main_content {
 	background-color:#EEEEEE;
-	height:500px;
-	width: 500px;
-	float:left;
+	height:100%;
+	width:100%;
 	padding-left: 10px;
 	padding-right: 10px;
 }

@@ -1,4 +1,4 @@
-var redmineApp = angular.module("redmineApp",["ngRoute"]);
+var redmineApp = angular.module("redmineApp",["ngRoute", "shoppinpal.mobile-menu"]);
 
 redmineApp.config(['$routeProvider',
   function($routeProvider) {
