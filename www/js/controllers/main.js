@@ -1,4 +1,4 @@
-angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu", function($scope, $http, $spMenu){
+angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu", "$location", "$log", function($scope, $http, $spMenu, $location, $log){
 	var screens = [
 		{
 			title : "Projects",
@@ -29,19 +29,36 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu
 		$http.get($scope.currentScreen.url, {params:{key:$scope.token}})
 				.success($scope.currentScreen.successResultCallback);
 		$spMenu.hide();
-	}
+	};
 
-	$scope.token = localStorage.getItem("api_key");
+	var showLoginScreen = function() {
+		$location.path('/login');
+		$location.replace();	
+	};
+
+	var init = function() {
+		if (localStorage.getItem("api_key") != null) {
+			$scope.token = localStorage.getItem("api_key");
+			setCurrentPage(0);	
+		} else {
+			showLoginScreen();	
+		}
+	};
+
 	$scope.menuItems = new Array();
 	for (var i = 0; i < screens.length; ++i) {
 		$scope.menuItems[i] = screens[i].title;	
-	}
+	};
 
 	$scope.onMenuItemClick = function(index) {
 		setCurrentPage(index);
 	};
 
-	setCurrentPage(0);
-
+	$scope.onLogout = function() {
+		localStorage.removeItem("api_key");
+		showLoginScreen();
+	};
+	
+	init();
 }]);
 

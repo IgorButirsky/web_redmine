@@ -8,6 +8,7 @@ angular.module("redmineApp").controller("loginCtrl", ["$scope", "$http", "$locat
 		$http.get("http://crm.mlsdev.com/users/current.json").success(function(data){
 			localStorage.setItem("api_key", data.user.api_key);
 			$location.path('/main');
+			$location.replace();
 		});
 	};
 }]);
