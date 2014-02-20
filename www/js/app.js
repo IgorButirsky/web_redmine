@@ -19,6 +19,10 @@ redmineApp.config(['$routeProvider',
         templateUrl: 'partials/issue.html',
         controller: 'issueCtrl'
       }).
+      when('/main/projects/:projectId/issues/:issueId', {
+        templateUrl: 'partials/issue.html',
+        controller: 'issueCtrl'
+      }).
       otherwise({
         redirectTo: '/main'
       });

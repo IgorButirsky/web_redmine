@@ -1,1 +1,4 @@
-Project {{projectId}}
+<h2>{{project.name}}</h2>
+<p class="menu_item" ng-repeat="issue in issuesData.issues" ng-click="onIssueSelected($index)">
+	{{issue.subject}}
+</p>
