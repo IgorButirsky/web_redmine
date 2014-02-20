@@ -58,6 +58,16 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu
 		localStorage.removeItem("api_key");
 		showLoginScreen();
 	};
+
+	$scope.onProjectSelected = function(index) {
+		$log.log("project " + index + " selected");
+		$location.path('/main/projects/' + $scope.projectsData.projects[index].id);
+	}
+
+	$scope.onIssueSelected = function(index) {
+		$log.log("issue " + index + " selected");
+		$location.path('/main/issues/' + $scope.issuesData.issues[index].id);
+	}
 	
 	init();
 }]);

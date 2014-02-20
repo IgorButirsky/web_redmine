@@ -13,12 +13,12 @@
 		<span>{{pageTitle}}</span>
 		<div ng-switch on="pageTitle">
 	        <div ng-switch-when="Projects">
-	        	<p ng-repeat="project in projectsData.projects">
+	        	<p class="menu_item" ng-repeat="project in projectsData.projects" ng-click="onProjectSelected($index)">
 					{{project.name}}
 				</p>
 	        </div>
 	        <div ng-switch-when="Tasks">
-	        	<p ng-repeat="issue in issuesData.issues">
+	        	<p class="menu_item" ng-repeat="issue in issuesData.issues" ng-click="onIssueSelected($index)">
 					{{issue.subject}}
 				</p>
 	        </div>

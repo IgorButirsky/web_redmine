@@ -3,10 +3,6 @@ var redmineApp = angular.module("redmineApp",["ngRoute", "shoppinpal.mobile-menu
 redmineApp.config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
-      /*when('/login', {
-        templateUrl: 'partials/login.html',
-        controller: 'loginCtrl'
-      }).*/
       when('/main', {
         templateUrl: 'partials/main.html',
         controller: 'mainCtrl'
@@ -14,6 +10,14 @@ redmineApp.config(['$routeProvider',
       when('/login', {
         templateUrl: 'partials/login.html',
         controller: 'loginCtrl'
+      }).
+      when('/main/projects/:projectId', {
+        templateUrl: 'partials/project.html',
+        controller: 'projectCtrl'
+      }).
+      when('/main/issues/:issueId', {
+        templateUrl: 'partials/issue.html',
+        controller: 'issueCtrl'
       }).
       otherwise({
         redirectTo: '/main'
