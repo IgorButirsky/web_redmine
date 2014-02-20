@@ -3,3 +3,5 @@
 <h4>Project: {{issue.project.name}}</h4>
 <h4>Author: {{issue.author.name}}</h4>
 <p><strong>Description:</strong> {{issue.description}}</p>
+<input type="text" ng-model="commentText">
+<button ng-click="onCommentClicked()">Comment</button>
