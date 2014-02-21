@@ -17,10 +17,13 @@
 					{{project.name}}
 				</p>
 	        </div>
-	        <div ng-switch-when="Tasks">
-	        	<p class="menu_item" ng-repeat="issue in issuesData.issues" ng-click="onIssueSelected($index)">
-					{{issue.subject}}
-				</p>
+	        <div ng-switch-when="Tasks" >
+	        	<div id="mydiv" class="list" when-scrolled="loadMore()">
+		        	<p class="menu_item" ng-repeat="issue in issuesData.issues" ng-click="onIssueSelected($index)">
+						{{issue.subject}}
+					</p>
+					<p class="progress" >Loading...</p>
+				</div>
 	        </div>
 	        <div ng-switch-when="My Profile">
 	        	<p>
