@@ -5,35 +5,32 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$spMenu", "$loca
 	var isLoading = false;
 	var screens = null;
 
+    function handleResponse() {
+        isLoading = false;
+    }
+
 	function initScreens() {
 		screens = [
 			{
 				title : "Projects",
-				url : "http://crm.mlsdev.com/projects.json",
-				successResultCallback : function(data){
-					$scope.projectsData = data;
-					isLoading = false;
-				},
-				params : {key:$scope.token}
+                doAction : function() {
+                    $scope.projectsData = Projects.get({key:$scope.token}, handleResponse(), handleResponse());
+                }
 			},
 			{
 				title : "Tasks",
-				url : "http://crm.mlsdev.com/issues.json",
-				successResultCallback : function(data){
-					$scope.issuesData = data;
-					offset += limit;
-					isLoading = false;
-				},
-				params : {offset:offset, key:$scope.token}
+                doAction : function() {
+                    $scope.issuesData = Issues.get({offset:offset, key:$scope.token}, function(){
+                        offset += limit;
+                        isLoading = false;
+                    }, handleResponse());
+                }
 			},
 			{
 				title : "My Profile",
-				url : "http://crm.mlsdev.com/users/current.json",
-				successResultCallback : function(data){
-					$scope.user = data.user;
-					isLoading = false;
-				},
-				params : {key:$scope.token}
+                doAction : function() {
+                    $scope.user = Users.get({key:$scope.token}, handleResponse(), handleResponse());
+                }
 			}
 		];
 		$scope.menuItems = new Array();
@@ -46,34 +43,7 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$spMenu", "$loca
 		$scope.currentScreen = screens[index];
 		$scope.pageTitle = $scope.currentScreen.title;
 		isLoading = true;
-
-        if (index == 0) {
-            $scope.projectsData = Projects.get({key:$scope.token}, function(){
-                console.log("get projects succeess");
-                isLoading = false;
-            }, function(){
-                console.log("get projects error");
-                isLoading = false;
-            });
-        } else if (index == 1) {
-            $scope.issuesData = Issues.get({offset:offset, key:$scope.token}, function(){
-                console.log("get issues succeess");
-                offset += limit;
-                isLoading = false;
-            }, function(){
-                console.log("get issues error");
-                isLoading = false;
-            });
-        } else {
-            console.log("Profile screen selected");
-            $scope.user = Users.get({key:$scope.token}, function(){
-                console.log("get user succeess");
-                isLoading = false;
-            }, function(){
-                console.log("get user error");
-                isLoading = false;
-            });
-        }
+        $scope.currentScreen.doAction();
         $spMenu.hide();
 	};
 
@@ -116,16 +86,11 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$spMenu", "$loca
         if (!isLoading) {
         	console.log("isLoading != true");
         	isLoading = true;
-            Issues.get({offset:offset, key:$scope.token}, function(issuesResult, getResponseHeaders){
-                console.log("get issues next page succeess");
+            Issues.get({offset:offset, key:$scope.token}, function(issuesResult){
                 $scope.issuesData.issues = $scope.issuesData.issues.concat(issuesResult.issues);
                 offset += limit;
                 isLoading = false;
-                console.log("issues num : " + $scope.issuesData.issues.length);
-            }, function(){
-                console.log("get issues next page error");
-                isLoading = false;
-            });
+            }, handleResponse());
 		}
     };
 	
