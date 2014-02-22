@@ -1,5 +1,5 @@
-angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu", "$location", "$log", "Users",
-									 function($scope, $http, $spMenu, $location, $log, Users){
+angular.module("redmineApp").controller("mainCtrl", ["$scope", "$spMenu", "$location", "Users", "Projects", "Issues",
+									 function($scope, $spMenu, $location, Users, Projects, Issues){
  	var offset = 0;
 	var limit = 25;
 	var isLoading = false;
@@ -47,12 +47,23 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu
 		$scope.pageTitle = $scope.currentScreen.title;
 		isLoading = true;
 
-        if (index != 2) {
-            $http.get($scope.currentScreen.url, {params:$scope.currentScreen.params})
-                .success($scope.currentScreen.successResultCallback)
-                .error(function(data, status) {
-                    isLoading = false;
-                });
+        if (index == 0) {
+            $scope.projectsData = Projects.get({key:$scope.token}, function(){
+                console.log("get projects succeess");
+                isLoading = false;
+            }, function(){
+                console.log("get projects error");
+                isLoading = false;
+            });
+        } else if (index == 1) {
+            $scope.issuesData = Issues.get({offset:offset, key:$scope.token}, function(){
+                console.log("get issues succeess");
+                offset += limit;
+                isLoading = false;
+            }, function(){
+                console.log("get issues error");
+                isLoading = false;
+            });
         } else {
             console.log("Profile screen selected");
             $scope.user = Users.get({key:$scope.token}, function(){
@@ -91,12 +102,12 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu
 	};
 
 	$scope.onProjectSelected = function(index) {
-		$log.log("project " + index + " selected");
+		console.log("project " + index + " selected");
 		$location.path('/main/projects/' + $scope.projectsData.projects[index].id);
 	}
 
 	$scope.onIssueSelected = function(index) {
-		$log.log("issue " + index + " selected");
+		console.log("issue " + index + " selected");
 		$location.path('/main/issues/' + $scope.issuesData.issues[index].id);
 	}
 
@@ -105,17 +116,16 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu
         if (!isLoading) {
         	console.log("isLoading != true");
         	isLoading = true;
-	        $http.get($scope.currentScreen.url, {params:{offset:offset, key:$scope.token}})
-					.success(function(data) {
-						console.log("success");
-						$scope.issuesData.issues = $scope.issuesData.issues.concat(data.issues);
-						offset += limit;
-						isLoading = false;
-					})
-					.error(function(data, status) {
-						console.log("error");
-						isLoading = false;
-					});
+            Issues.get({offset:offset, key:$scope.token}, function(issuesResult, getResponseHeaders){
+                console.log("get issues next page succeess");
+                $scope.issuesData.issues = $scope.issuesData.issues.concat(issuesResult.issues);
+                offset += limit;
+                isLoading = false;
+                console.log("issues num : " + $scope.issuesData.issues.length);
+            }, function(){
+                console.log("get issues next page error");
+                isLoading = false;
+            });
 		}
     };
 	
