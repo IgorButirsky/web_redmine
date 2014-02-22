@@ -5,7 +5,7 @@ angular.module("redmineApp").controller("loginCtrl", ["$scope", "$location", "$h
 	$scope.doLogin = function() {
 		var encoded = window.btoa($scope.login + ":" + $scope.password);
 		$http.defaults.headers.common.Authorization = 'Basic ' + encoded;
-        var user = Users.get(function(){
+        var user = Users.login(function(){
             localStorage.setItem("api_key", user.user.api_key);
             $location.path('/main');
             $location.replace();

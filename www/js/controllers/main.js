@@ -1,5 +1,5 @@
-angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu", "$location", "$log",
-									 function($scope, $http, $spMenu, $location, $log){
+angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu", "$location", "$log", "Users",
+									 function($scope, $http, $spMenu, $location, $log, Users){
  	var offset = 0;
 	var limit = 25;
 	var isLoading = false;
@@ -46,12 +46,24 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$http", "$spMenu
 		$scope.currentScreen = screens[index];
 		$scope.pageTitle = $scope.currentScreen.title;
 		isLoading = true;
-		$http.get($scope.currentScreen.url, {params:$scope.currentScreen.params})
-				.success($scope.currentScreen.successResultCallback)
-				.error(function(data, status) {
-					isLoading = false;
-				});
-		$spMenu.hide();
+
+        if (index != 2) {
+            $http.get($scope.currentScreen.url, {params:$scope.currentScreen.params})
+                .success($scope.currentScreen.successResultCallback)
+                .error(function(data, status) {
+                    isLoading = false;
+                });
+        } else {
+            console.log("Profile screen selected");
+            $scope.user = Users.get({key:$scope.token}, function(){
+                console.log("get user succeess");
+                isLoading = false;
+            }, function(){
+                console.log("get user error");
+                isLoading = false;
+            });
+        }
+        $spMenu.hide();
 	};
 
 	var showLoginScreen = function() {

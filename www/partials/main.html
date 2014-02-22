@@ -27,10 +27,10 @@
 	        </div>
 	        <div ng-switch-when="My Profile">
 	        	<p>
-					<strong>Name: </strong>{{user.firstname}}
+					<strong>Name: </strong>{{user.user.firstname}}
 				</p>
 				<p>
-					<strong>Surname: </strong>{{user.lastname}}
+					<strong>Surname: </strong>{{user.user.lastname}}
 				</p>
 				<button ng-click="onLogout()">Logout</button>
 	        </div>
