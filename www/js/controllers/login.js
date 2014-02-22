@@ -1,14 +1,15 @@
-angular.module("redmineApp").controller("loginCtrl", ["$scope", "$http", "$location", function($scope, $http, $location){
+angular.module("redmineApp").controller("loginCtrl", ["$scope", "$location", "$http", "Users", function($scope, $location, $http, Users){
 	$scope.login = "butirsky";
 	$scope.password = "kradenola";
 
 	$scope.doLogin = function() {
 		var encoded = window.btoa($scope.login + ":" + $scope.password);
 		$http.defaults.headers.common.Authorization = 'Basic ' + encoded;
-		$http.get("http://crm.mlsdev.com/users/current.json").success(function(data){
-			localStorage.setItem("api_key", data.user.api_key);
-			$location.path('/main');
-			$location.replace();
-		});
+        var user = Users.get(function(){
+            localStorage.setItem("api_key", user.user.api_key);
+            $location.path('/main');
+            $location.replace();
+        });
+        $http.defaults.headers.common.Authorization = 'Basic ';
 	};
 }]);
