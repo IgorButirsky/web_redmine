@@ -1,20 +1,20 @@
-angular.module("redmineApp").controller("issueCtrl", ["$scope", "$routeParams", "$http", "$log", function($scope, $routeParams, $http, $log) {
+angular.module("redmineApp").controller("issueCtrl", ["$scope", "$routeParams", "Issues", function($scope, $routeParams, Issue) {
 	$scope.issueId = $routeParams.issueId;
 	$scope.commentText = null;
 
-	$http.get("http://crm.mlsdev.com/issues/" + $scope.issueId + ".json", {params:{key:localStorage.getItem("api_key")}})
-				.success(function(data) {
-					$scope.issue = data.issue;
-				});
+    $scope.issueData = Issue.get({issueId:$scope.issueId, key:localStorage.getItem("api_key")});
 
 	$scope.onCommentClicked = function () {
-		$log.log("onCommentClicked");
+		console.log("onCommentClicked");
 		if ($scope.commentText == null || $scope.commentText.length == 0) {
-			$log.log("comment is empty");
+			console.log("comment is empty");
 			return;
 		}
-		$log.log("send comment");
-		var data = {issue:{notes:$scope.commentText}};
-		$http.put("http://crm.mlsdev.com/issues/17408.json", data, {params:{key:localStorage.getItem("api_key")}});
+        console.log("send comment");
+
+        $scope.issueData.issue.notes = $scope.commentText;
+        Issue.comment({issueId:$scope.issueId, key:localStorage.getItem("api_key")}, $scope.issueData);
+
+        $scope.commentText = null;
 	}
 }]);

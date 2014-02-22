@@ -1,7 +1,7 @@
 <h2>Issue #{{issueId}}</h2>
-<h2>{{issue.subject}}</h2>
-<h4>Project: {{issue.project.name}}</h4>
-<h4>Author: {{issue.author.name}}</h4>
-<p><strong>Description:</strong> {{issue.description}}</p>
+<h2>{{issueData.issue.subject}}</h2>
+<h4>Project: {{issueData.issue.project.name}}</h4>
+<h4>Author: {{issueData.issue.author.name}}</h4>
+<p><strong>Description:</strong> {{issueData.issue.description}}</p>
 <input type="text" ng-model="commentText">
 <button ng-click="onCommentClicked()">Comment</button>

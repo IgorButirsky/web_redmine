@@ -14,13 +14,13 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$spMenu", "$loca
 			{
 				title : "Projects",
                 doAction : function() {
-                    $scope.projectsData = Projects.get({key:$scope.token}, handleResponse(), handleResponse());
+                    $scope.projectsData = Projects.query({key:$scope.token}, handleResponse(), handleResponse());
                 }
 			},
 			{
 				title : "Tasks",
                 doAction : function() {
-                    $scope.issuesData = Issues.get({offset:offset, key:$scope.token}, function(){
+                    $scope.issuesData = Issues.query({offset:offset, key:$scope.token}, function(){
                         offset += limit;
                         isLoading = false;
                     }, handleResponse());
