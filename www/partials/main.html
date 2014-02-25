@@ -13,17 +13,18 @@
 		<span>{{pageTitle}}</span>
 		<div ng-switch on="pageTitle">
 	        <div ng-switch-when="Projects">
-	        	<p class="menu_item" ng-repeat="project in projectsData.projects" ng-click="onProjectSelected($index)">
-					{{project.name}}
-				</p>
+                <list-view  class="list" when-scrolled="loadMoreProjects()" source="projectsData" >
+                    <p class="menu_item" ng-repeat="project in projectsData.projects" ng-click="onProjectSelected($index)">
+                        {{project.name}}
+                    </p>
+                </list-view>
 	        </div>
 	        <div ng-switch-when="Tasks" >
-	        	<div id="mydiv" class="list" when-scrolled="loadMore()">
+	        	<list-view  id="mydiv" class="list" when-scrolled="loadMoreIssues()" source="issuesData" >
 		        	<p class="menu_item" ng-repeat="issue in issuesData.issues" ng-click="onIssueSelected($index)">
 						{{issue.subject}}
 					</p>
-					<p class="progress" >Loading...</p>
-				</div>
+				</list-view>
 	        </div>
 	        <div ng-switch-when="My Profile">
 	        	<p>
