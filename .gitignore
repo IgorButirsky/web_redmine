@@ -2,3 +2,6 @@ platforms/android/bin/
 platforms/android/assets/
 platforms/android/CordovaLib/
 .idea
+script.sh
+platforms/android/android.iml
+platforms/android/out/

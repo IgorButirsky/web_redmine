@@ -1,41 +1,49 @@
 <div id="sp-nav">
-	<div class="side_menu" >  
-		<ul class="menu_items">
-			<li class="menu_item" ng-repeat="item in menuItems" ng-click="onMenuItemClick($index)">
-				{{item}}
-			</li>
-		</ul>
-	</div>
+    <div class="side_menu">
+        <ul class="menu_items">
+            <li class="menu_item" ng-repeat="item in menuItems" ng-click="onMenuItemClick($index)">
+                {{item}}
+            </li>
+        </ul>
+    </div>
 </div>
 <div id="sp-page">
-	<div class="main_content">
-		<button ng-click="$spMenu.toggle()">E</button>
-		<span>{{pageTitle}}</span>
-		<div ng-switch on="pageTitle">
-	        <div ng-switch-when="Projects">
-                <list-view  class="list" when-scrolled="loadMoreProjects()" source="projectsData" >
-                    <p class="menu_item" ng-repeat="project in projectsData.projects" ng-click="onProjectSelected($index)">
-                        {{project.name}}
+    <div class="main_content">
+        <!--<div class="content-header-container">-->
+            <div class="content-header">
+                <button ng-click="$spMenu.toggle()">E</button>
+                <span id="content-title-text">{{pageTitle}}</span>
+            </div>
+        <!--</div>-->
+        <div class="content-body">
+            <div ng-switch on="pageTitle">
+                <div ng-switch-when="Projects">
+                    <list-view class="list" when-scrolled="loadMoreProjects()" source="projectsData">
+                        <p class="menu_item" ng-repeat="project in projectsData.projects"
+                           ng-click="onProjectSelected($index)">
+                            {{project.name}}
+                        </p>
+                    </list-view>
+                </div>
+                <div ng-switch-when="Tasks">
+                    <list-view id="mydiv" class="list" when-scrolled="loadMoreIssues()" source="issuesData">
+                        <p class="menu_item" ng-repeat="issue in issuesData.issues" ng-click="onIssueSelected($index)">
+                            {{issue.subject}}
+                        </p>
+                    </list-view>
+                </div>
+                <div ng-switch-when="My Profile">
+                    <p>
+                        <strong>Name: </strong>{{user.user.firstname}}
                     </p>
-                </list-view>
-	        </div>
-	        <div ng-switch-when="Tasks" >
-	        	<list-view  id="mydiv" class="list" when-scrolled="loadMoreIssues()" source="issuesData" >
-		        	<p class="menu_item" ng-repeat="issue in issuesData.issues" ng-click="onIssueSelected($index)">
-						{{issue.subject}}
-					</p>
-				</list-view>
-	        </div>
-	        <div ng-switch-when="My Profile">
-	        	<p>
-					<strong>Name: </strong>{{user.user.firstname}}
-				</p>
-				<p>
-					<strong>Surname: </strong>{{user.user.lastname}}
-				</p>
-				<button ng-click="onLogout()">Logout</button>
-	        </div>
-	    </div>
-		
-	</div>
+
+                    <p>
+                        <strong>Surname: </strong>{{user.user.lastname}}
+                    </p>
+                    <button ng-click="onLogout()">Logout</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
 </div>

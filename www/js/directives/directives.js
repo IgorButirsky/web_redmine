@@ -17,6 +17,13 @@ angular.module("redmineApp").directive("listView", function() {
                     scope.whenScrolled();
                 }
             });
+            elm.bind('touchmove', function() {
+                console.log("total : " + scope.source.total_count + ", offset : " + scope.source.offset);
+                if (elm[0].scrollTop + elm[0].offsetHeight >= elm[0].scrollHeight && scope.source.total_count > scope.source.offset) {
+                    console.log("Loading shown");
+                    scope.whenScrolled();
+                }
+            });
         }
     }
 })
