@@ -1,4 +1,4 @@
-angular.module("redmineApp").controller("loginCtrl", ["$scope", "$location", "$http", "Users", function($scope, $location, $http, Users){
+angular.module("redmineApp").controller("loginCtrl", function($scope, $http, $state, Users){
 	$scope.login = "butirsky";
 	$scope.password = "kradenola";
 
@@ -7,9 +7,10 @@ angular.module("redmineApp").controller("loginCtrl", ["$scope", "$location", "$h
 		$http.defaults.headers.common.Authorization = 'Basic ' + encoded;
         var user = Users.get(function(){
             localStorage.setItem("api_key", user.user.api_key);
-            $location.path('/main');
-            $location.replace();
+            $state.go("main");
+//            $location.path('/main');
+//            $location.replace();
         });
         $http.defaults.headers.common.Authorization = 'Basic ';
 	};
-}]);
+});

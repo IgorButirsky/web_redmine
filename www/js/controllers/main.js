@@ -1,6 +1,28 @@
-angular.module("redmineApp").controller("mainCtrl", ["$scope", "$spMenu", "$location", "Users", "Projects", "Issues",
-    function ($scope, $spMenu, $location, Users, Projects, Issues) {
-        var screens = null;
+angular.module("redmineApp").controller("mainCtrl", function ($scope, $state) {
+
+        var init = function () {
+            if (localStorage.getItem("api_key") != null) {
+                $scope.token = localStorage.getItem("api_key");
+                alert($scope.token);
+//                initScreens();
+//                setCurrentScreen(0);
+            } else {
+                showLoginScreen();
+            }
+        };
+
+        var showLoginScreen = function () {
+            $state.go("login");
+        };
+
+        $scope.signOut = function() {
+            localStorage.removeItem("api_key");
+            showLoginScreen();
+        };
+
+        init();
+
+        /*var screens = null;
 
         function initScreens() {
             screens = [
@@ -91,6 +113,6 @@ angular.module("redmineApp").controller("mainCtrl", ["$scope", "$spMenu", "$loca
             });
         };
 
-        init();
-    }]);
+        init();*/
+    });
 
