@@ -1,17 +1,11 @@
-angular.module("redmineApp").controller("projectCtrl", ["$scope", "$routeParams", "$location", "Projects", "Issues",
-    function ($scope, $routeParams, $location, Projects, Issues) {
-        $scope.projectId = $routeParams.projectId;
+angular.module("redmineApp").controller("projectCtrl", function ($scope, $stateParams, Projects, Issues) {
+        $scope.projectId = $stateParams.projectId;
 
         $scope.loadIssues = function () {
             console.log("Start loading issues");
             $scope.issuesData = Issues.query({project_id: $scope.projectId, key: localStorage.getItem("api_key")}, function() {
                 $scope.issuesData.offset = $scope.issuesData.limit;
             });
-        };
-
-        $scope.onIssueSelected = function (index) {
-            console.log("Issue " + index + " selected");
-            $location.path("/main/projects/" + $scope.projectId + "/issues/" + $scope.issuesData.issues[index].id);
         };
 
         $scope.loadMoreIssues = function () {
@@ -26,4 +20,4 @@ angular.module("redmineApp").controller("projectCtrl", ["$scope", "$routeParams"
             $scope.loadIssues();
         });
 
-    }]);
+    });

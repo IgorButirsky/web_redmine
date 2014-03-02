@@ -3,9 +3,6 @@ angular.module("redmineApp").controller("mainCtrl", function ($scope, $state) {
         var init = function () {
             if (localStorage.getItem("api_key") != null) {
                 $scope.token = localStorage.getItem("api_key");
-                alert($scope.token);
-//                initScreens();
-//                setCurrentScreen(0);
             } else {
                 showLoginScreen();
             }

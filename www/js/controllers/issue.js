@@ -1,20 +1,23 @@
-angular.module("redmineApp").controller("issueCtrl", ["$scope", "$routeParams", "Issues", function($scope, $routeParams, Issue) {
-	$scope.issueId = $routeParams.issueId;
-	$scope.commentText = null;
+angular.module("redmineApp").controller("issueCtrl", function($scope, $stateParams, Issues) {
+    $scope.issueInfo = {
+        issueId : $stateParams.issueId,
+        title : "Issue #" + $stateParams.issueId,
+        commentText : ""
+    };
 
-    $scope.issueData = Issue.get({issueId:$scope.issueId, key:localStorage.getItem("api_key")});
+    $scope.issueData = Issues.get({issueId:$scope.issueInfo.issueId, key:localStorage.getItem("api_key")});
 
 	$scope.onCommentClicked = function () {
 		console.log("onCommentClicked");
-		if ($scope.commentText == null || $scope.commentText.length == 0) {
+		if ($scope.issueInfo.commentText == null || $scope.issueInfo.commentText.length == 0) {
 			console.log("comment is empty");
 			return;
 		}
         console.log("send comment");
 
-        $scope.issueData.issue.notes = $scope.commentText;
-        Issue.comment({issueId:$scope.issueId, key:localStorage.getItem("api_key")}, $scope.issueData);
+        $scope.issueData.issue.notes = $scope.issueInfo.commentText;
+        Issues.comment({issueId:$scope.issueInfo.issueId, key:localStorage.getItem("api_key")}, $scope.issueData);
 
-        $scope.commentText = null;
+        $scope.issueInfo.commentText = null;
 	}
-}]);
+});

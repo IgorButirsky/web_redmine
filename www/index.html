@@ -32,21 +32,11 @@
         <script type="text/javascript" src="js/services/api.js"></script>
         <script type="text/javascript" src="js/controllers/login.js"></script>
         <script type="text/javascript" src="js/controllers/main.js"></script>
-        <!--<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.1.5/angular-mobile.js"></script>
-        <script src="lib/js/ionic.bundle.js"></script>
-        <script type="text/javascript" src="js/vendor/angular.min.js"></script>
-        <script type="text/javascript" src="js/vendor/angular-resource.min.js"></script>
-        <script type="text/javascript" src="js/vendor/angular-route.min.js"></script>
-        <script type="text/javascript" src="js/vendor/angular-animate.min.js"></script>
-        <script type="text/javascript" src="js/app.js"></script>
-        <script type="text/javascript" src="js/controllers/login.js"></script>
-        <script type="text/javascript" src="js/controllers/main.js"></script>
+        <script type="text/javascript" src="js/controllers/projects.js"></script>
+        <script type="text/javascript" src="js/controllers/issues.js"></script>
+        <script type="text/javascript" src="js/controllers/profile.js"></script>
         <script type="text/javascript" src="js/controllers/project.js"></script>
         <script type="text/javascript" src="js/controllers/issue.js"></script>
-        <script type="text/javascript" src="js/directives/directives.js"></script>
-        <script type="text/javascript" src="js/services/api.js"></script>
-        <script type="text/javascript" src="js/side_menu/ng-mobile-menu.js"></script>-->
     </head>
     <body>
         <div ng-controller="mainCtrl">
@@ -65,15 +55,14 @@
 
                 <ion-side-menu side="left">
                     <header class="bar bar-header bar-assertive">
-                        <div class="title">Left Menu</div>
+                        <div class="title">Menu</div>
                     </header>
                     <ion-content has-header="true">
-                        <!--<button ng-click="signOut()">Signout</button>-->
-
-                       <!-- <ul class="list">
-                            <a href="#/event/check-in" class="item">Check-in</a>
-                            <a href="#/event/attendees" class="item">Attendees</a>
-                        </ul>-->
+                        <ul class="list">
+                            <a href="#/main/projects" class="item">Projects</a>
+                            <a href="#/main/issues" class="item">Issues</a>
+                            <a href="#/main/profile" class="item">My Profile</a>
+                        </ul>
                     </ion-content>
                 </ion-side-menu>
 
@@ -87,23 +76,120 @@
                     <div class="list">
                         <label class="item item-input">
                             <span class="input-label">Username</span>
-                            <input type="text" ng-model="login">
+                            <input type="text" ng-model="user.username">
                         </label>
                         <label class="item item-input">
                             <span class="input-label">Password</span>
-                            <input type="password" ng-model="password">
+                            <input type="password" ng-model="user.password">
                         </label>
                     </div>
                     <div class="padding">
                         <button class="button button-block button-positive" ng-click="doLogin()">
                             Sign-In
                         </button>
-                        <!--<p class="text-center">
-                            <a href="#/forgot-password">Forgot password</a>
-                        </p>-->
                     </div>
                 </ion-content>
             </ion-view>
         </script>
+
+        <script id="projects.html" type="text/ng-template">
+
+            <ion-view title="'Projects'">
+                <ion-content class="has-header">
+
+                    <ion-list ><!--option-buttons="itemButtons"-->
+
+                        <ion-item ng-repeat="project in projectsData.projects"
+                                  item="project"
+                                  href="#/main/project/{{project.id}}">
+                            {{ project.name }}
+                        </ion-item>
+
+                    </ion-list>
+
+                </ion-content>
+            </ion-view>
+        </script>
+
+        <script id="issues.html" type="text/ng-template">
+
+            <ion-view title="'Issues'">
+                <ion-content class="has-header">
+
+                    <ion-list ><!--option-buttons="itemButtons"-->
+
+                        <ion-item ng-repeat="issue in issuesData.issues"
+                                  item="issue"
+                                  href="#/main/issue/{{issue.id}}">
+                            {{ issue.subject }}
+                        </ion-item>
+
+                    </ion-list>
+
+                </ion-content>
+            </ion-view>
+
+        </script>
+
+        <script id="profile.html" type="text/ng-template">
+            <ion-view title="'My profile'">
+                <ion-content class="has-header">
+                    <div >
+                        <p class="item">
+                            <strong>First Name: </strong>{{user.user.firstname}}
+                        </p>
+                        <p class="item">
+                            <strong>Second Name: </strong>{{user.user.lastname}}
+                        </p>
+                        <p class="item">
+                            <strong>E-mail: </strong>{{user.user.mail}}
+                        </p>
+                        <button class="button button-block" ng-click="onLogout()">Logout</button>
+                    </div>
+                </ion-content>
+            </ion-view>
+        </script>
+
+        <script id="project.html" type="text/ng-template">
+            <ion-view title="projectData.project.name">
+                <ion-content class="has-header">
+
+                    <ion-list ><!--option-buttons="itemButtons"-->
+
+                        <ion-item ng-repeat="issue in issuesData.issues"
+                                  item="issue"
+                                  href="#/main/project/{{projectId}}/issue/{{issue.id}}">
+                            {{ issue.subject }}
+                        </ion-item>
+
+                    </ion-list>
+
+                </ion-content>
+            </ion-view>
+        </script>
+
+        <script id="issue.html" type="text/ng-template">
+            <ion-view title="issueInfo.title">
+                <ion-content class="has-header">
+                    <div class="card">
+                        <h2>{{issueData.issue.subject}}</h2>
+                        <h4>Project: {{issueData.issue.project.name}}</h4>
+                        <h4>Author: {{issueData.issue.author.name}}</h4>
+                        <p><strong>Description:</strong> {{issueData.issue.description}}</p>
+                    </div>
+                    <div class="list list-inset">
+                        <label class="item item-input">
+                            <input type="text" placeholder="Comment" ng-model="issueInfo.commentText">
+                        </label>
+                    </div>
+                    <div class="padding-left">
+                        <button class="button" ng-click="onCommentClicked()">Send</button>
+                    </div>
+
+
+                </ion-content>
+            </ion-view>
+        </script>
+
     </body>
 </html>
