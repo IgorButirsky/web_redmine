@@ -1,5 +1,6 @@
 angular.module("redmineApp").controller("projectCtrl", function ($scope, $stateParams, Projects, Issues) {
         $scope.projectId = $stateParams.projectId;
+        $scope.title = "Projects";
 
         $scope.loadIssues = function () {
             console.log("Start loading issues");

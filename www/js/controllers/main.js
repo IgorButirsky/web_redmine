@@ -1,4 +1,4 @@
-angular.module("redmineApp").controller("mainCtrl", function ($scope, $state) {
+angular.module("redmineApp").controller("mainCtrl", function ($scope, $state, $ionicSideMenuDelegate) {
 
         var init = function () {
             if (localStorage.getItem("api_key") != null) {
@@ -12,9 +12,40 @@ angular.module("redmineApp").controller("mainCtrl", function ($scope, $state) {
             $state.go("login");
         };
 
+        $scope.menuItems = [
+            {
+                title : "Projects",
+                dir : "main.projects"
+            },
+            {
+                title : "Issues",
+                dir : "main.issues"
+            },
+            {
+                title : "My Profile",
+                dir : "main.profile"
+            }
+        ];
+
+        $scope.leftButtons = [{
+            type: 'button-icon button-clear ion-navicon',
+            tap: function(e) {
+                $ionicSideMenuDelegate.toggleLeft($scope.$$childHead);
+            }
+        }];
+
         $scope.signOut = function() {
             localStorage.removeItem("api_key");
             showLoginScreen();
+        };
+
+        $scope.onMenuItemSelected = function(index) {
+            $state.go($scope.menuItems[index].dir);
+            $ionicSideMenuDelegate.toggleLeft($scope.$$childHead);
+        };
+
+        $scope.showMenu = function() {
+            $ionicSideMenuDelegate.toggleLeft($scope.$$childHead);
         };
 
         init();

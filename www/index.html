@@ -58,11 +58,9 @@
                         <div class="title">Menu</div>
                     </header>
                     <ion-content has-header="true">
-                        <ul class="list">
-                            <a href="#/main/projects" class="item">Projects</a>
-                            <a href="#/main/issues" class="item">Issues</a>
-                            <a href="#/main/profile" class="item">My Profile</a>
-                        </ul>
+                        <div class="list">
+                            <a class="item" ng-click="onMenuItemSelected($index)" ng-repeat="menuItem in menuItems">{{menuItem.title}}</a>
+                        </div>
                     </ion-content>
                 </ion-side-menu>
 
@@ -93,11 +91,10 @@
         </script>
 
         <script id="projects.html" type="text/ng-template">
-
-            <ion-view title="'Projects'">
+            <ion-view title="'Projects'" left-buttons="leftButtons">
                 <ion-content class="has-header">
 
-                    <ion-list ><!--option-buttons="itemButtons"-->
+                    <ion-list option-buttons="itemButtons">
 
                         <ion-item ng-repeat="project in projectsData.projects"
                                   item="project"
@@ -112,8 +109,7 @@
         </script>
 
         <script id="issues.html" type="text/ng-template">
-
-            <ion-view title="'Issues'">
+            <ion-view title="'Issues'" left-buttons="leftButtons">
                 <ion-content class="has-header">
 
                     <ion-list ><!--option-buttons="itemButtons"-->
@@ -132,7 +128,7 @@
         </script>
 
         <script id="profile.html" type="text/ng-template">
-            <ion-view title="'My profile'">
+            <ion-view title="'My profile'" left-buttons="leftButtons">
                 <ion-content class="has-header">
                     <div >
                         <p class="item">
@@ -151,7 +147,7 @@
         </script>
 
         <script id="project.html" type="text/ng-template">
-            <ion-view title="projectData.project.name">
+            <ion-view title="projectData.project.name" left-buttons="leftButtons">
                 <ion-content class="has-header">
 
                     <ion-list ><!--option-buttons="itemButtons"-->
@@ -169,7 +165,7 @@
         </script>
 
         <script id="issue.html" type="text/ng-template">
-            <ion-view title="issueInfo.title">
+            <ion-view title="issueInfo.title" left-buttons="leftButtons">
                 <ion-content class="has-header">
                     <div class="card">
                         <h2>{{issueData.issue.subject}}</h2>
